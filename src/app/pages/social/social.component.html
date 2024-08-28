@@ -1,0 +1,77 @@
+@for (item of listData; track $index) {
+<div>
+  <div class="title">{{ item.title }}</div>
+  <div class="content">{{ item.content }}</div>
+</div>
+}
+
+<form [formGroup]="form" (submit)="onSubmit()">
+  <mat-form-field class="example-full-width">
+    <mat-label>姓名</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>下拉框</mat-label>
+    <mat-select matNativeControl required formControlName="sel">
+      @for (item of options; track $index) {
+      <mat-option [value]="item.value">{{ item.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-flat-button>提交</button>
+</form>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="weight">
+    <th mat-header-cell *matHeaderCellDef>Weight</th>
+    <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef>Symbol</th>
+    <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    (click)="clickedRows.add(row)"
+    [class.demo-row-is-clicked]="clickedRows.has(row)"
+    *matRowDef="let row; columns: displayedColumns"
+  ></tr>
+</table>
+
+<mat-paginator
+  [length]="100"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onChange($event)"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>
+
+@if (!clickedRows.size) {
+<div>Clicked rows will be logged here</div>
+}
+
+<ul>
+  @for (clickedRow of clickedRows; track clickedRow) {
+  <li>Clicked on {{ clickedRow.name }}</li>
+  }
+</ul>
