@@ -23,3 +23,17 @@
 <div class="box" [@routeAnimations]="getRouteAnimationData()">
   <router-outlet></router-outlet>
 </div>
+
+
+<button mat-flat-button (click)="inc()">增加</button>
+<button mat-flat-button (click)="desc()">减少</button>
+<button mat-flat-button (click)="reset()">重置</button>
+
+<button mat-flat-button (click)="editstr()">修改字符</button>
+
+<div>Current Count: {{ count$ | async  }}</div>
+
+
+<div>
+  num : {{num | async}}
+</div>
