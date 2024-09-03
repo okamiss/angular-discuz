@@ -29,18 +29,14 @@ import { AsyncPipe, JsonPipe } from '@angular/common'
 })
 export class AppComponent {
   count$: Observable<string>
-  
+
   menusList = menusList
 
-
   num: Observable<number>
-  store: any
 
-  constructor(private contexts: ChildrenOutletContexts, store: Store<any>) {
+  constructor(private contexts: ChildrenOutletContexts, private store: Store<any>) {
     this.count$ = store.select('BBB')
     this.num = store.select('AAA')
-    this.store = store
-
   }
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation']
@@ -50,8 +46,9 @@ export class AppComponent {
     console.log(e)
   }
 
-  setThem(e: number) {
-    console.log(e)
+  setThem(e: string) {
+    // console.log(e)
+    document.body.className = e
   }
 
   inc() {
@@ -62,11 +59,9 @@ export class AppComponent {
     this.store.dispatch(decrement())
   }
 
-  reset(){
+  reset() {
     this.store.dispatch(reset())
   }
-
-
 
   editstr() {
     const sjzf = Math.random()
