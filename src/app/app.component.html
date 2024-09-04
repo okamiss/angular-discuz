@@ -1,4 +1,4 @@
-<div class="nav">
+<!-- <div class="nav">
   <ul>
     @for (item of menusList; track $index) {
     <li>
@@ -13,8 +13,10 @@
     <li>
       <button mat-button [matMenuTriggerFor]="menu">切换主题</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="setThem('light')">亮色</button>
-        <button mat-menu-item (click)="setThem('dark')">暗色</button>
+        <button mat-menu-item (click)="setThem('theme-light-azure')">亮色1</button>
+        <button mat-menu-item (click)="setThem('theme-light-rose')">亮色2</button>
+        <button mat-menu-item (click)="setThem('theme-dark-magenta')">暗色1</button>
+        <button mat-menu-item (click)="setThem('theme-dark-cayn')">暗色2</button>
       </mat-menu>
     </li>
   </ul>
@@ -36,4 +38,19 @@
 
 <div>
   num : {{num | async}}
+</div> -->
+
+<div class="box">
+  <div class="box-left border">
+    <div class="box-left-logo border">CRM系统</div>
+    <div class="box-left-menu">
+      <app-menu></app-menu>
+    </div>
+  </div>
+  <div class="box-right">
+    <div class="box-right-header border"></div>
+    <div class="box-right-body" [@routeAnimations]="getRouteAnimationData()">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

@@ -52,9 +52,9 @@ export class SocialComponent implements OnInit {
   listData: any
   constructor(private http: ApiService) {}
   ngOnInit() {
-    this.http.get('api/articles').subscribe((res) => {
-      this.listData = res.data.articles
-    })
+    // this.http.get('api/articles').subscribe((res) => {
+    //   this.listData = res.data.articles
+    // })
   }
 
   form = new FormGroup({

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ChildrenOutletContexts, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
 import { menusList } from './common/menu-data'
 import { slideInAnimation } from './animation/slideInAnimation'
@@ -9,6 +9,7 @@ import { addc, decrement, increment, reset } from './store/counter.actions'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { AsyncPipe, JsonPipe } from '@angular/common'
+import { MenuComponent } from './pages/menu/menu.component'
 
 @Component({
   selector: 'app-root',
@@ -21,13 +22,14 @@ import { AsyncPipe, JsonPipe } from '@angular/common'
     MatButtonModule,
     MatMenuModule,
     AsyncPipe,
-    JsonPipe
+    JsonPipe,
+    MenuComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [slideInAnimation]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   count$: Observable<string>
 
   menusList = menusList
@@ -47,8 +49,15 @@ export class AppComponent {
   }
 
   setThem(e: string) {
-    // console.log(e)
-    document.body.className = e
+    const htmlElement = document.documentElement // 或者 document.querySelector('html');
+
+    if (e !== 'theme-light-azure') {
+      htmlElement.className = e
+      localStorage.setItem('theme', e)
+    } else {
+      htmlElement.className = ''
+      localStorage.removeItem('theme')
+    }
   }
 
   inc() {
@@ -66,5 +75,13 @@ export class AppComponent {
   editstr() {
     const sjzf = Math.random()
     this.store.dispatch(addc(String(sjzf)))
+  }
+
+  ngOnInit() {
+    const htmlElement = document.documentElement
+    const getTheme = localStorage.getItem('theme')
+    if (getTheme) {
+      htmlElement.className = getTheme
+    }
   }
 }

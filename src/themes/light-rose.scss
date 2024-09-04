@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$theme-light-rose: mat.define-theme(
+  (
+    color: (
+      theme-type: 'light',
+      primary: mat.$rose-palette,
+      tertiary: mat.$red-palette
+    ),
+    typography: (
+      brand-family: 'Comic Sans',
+      bold-weight: 900
+    ),
+    density: (
+      scale: -1
+    )
+  )
+);
+
+.theme-light-rose {
+  @include mat.all-component-themes($theme-light-rose);
+}
