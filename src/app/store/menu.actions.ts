@@ -9,4 +9,4 @@ can be found in the LICENSE file at https://github.com/ngrx/platform
 */
 
 
-export const addc = createAction('addcbb', props<any>());
+export const menuSave = createAction('menuSave', props<{ list: MenuNode[] }>());

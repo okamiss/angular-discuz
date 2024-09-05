@@ -6,8 +6,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { httpInterceptor } from './utils/http.interceptor'
 import { provideState, provideStore } from '@ngrx/store'
-import { counterReducer, newsReducer } from './store/counter.reducer'
+// import { counterReducer, newsReducer } from './store/counter.reducer'
 import { provideStoreDevtools } from '@ngrx/store-devtools'
+import { menuReducer } from './store/menu.reducer'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,8 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([httpInterceptor])),
     provideAnimationsAsync(),
     provideStore(),
-    provideState('AAA',counterReducer),
-    provideState('BBB',newsReducer),
+    provideState("menu",menuReducer),
+    // provideState('AAA',counterReducer),
+    // provideState('BBB',newsReducer),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
   ]
 }

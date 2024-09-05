@@ -1,6 +1,13 @@
+
+
+@for (item of menuItems$; track $index) {
+  <p>{{item | json}}</p>
+}
+
+
 <!-- 顶层菜单 -->
 
-@for (item of menuItems; track $index) {
+<!-- @for (item of menuItems; track $index) {
 <button mat-button [matMenuTriggerFor]="item.oldPath">{{ item.name }}</button>
 <mat-menu #{{item.oldPath}}="matMenu">
   @if (item.children) { @for (citem of item.children; track $index) {
@@ -10,7 +17,7 @@
   <button mat-menu-item>{{ item.name }}</button>
   }
 </mat-menu>
-}
+} -->
 
 <!-- <ng-container *ngFor="let menu of menuItems">
   <button mat-button [matMenuTriggerFor]="menu.oldPath">{{ menu.name }}</button>

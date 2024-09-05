@@ -1,27 +1,29 @@
 import { createReducer, on } from '@ngrx/store'
-import { increment, decrement, reset, addc } from './counter.actions'
+import { menuSave } from './menu.actions'
 
-export const initialState = 10
+export interface ItemState {
+  list: MenuNode[]
+}
 
-export const counterReducer = createReducer(
+export const initialState: ItemState = {
+  list: []
+}
+
+export const menuReducer = createReducer(
   initialState,
-  on(increment, (state, actions) => {
-    return state + 1
-  }),
-  on(decrement, (state) => state - 1),
-  on(reset, (state) => 0)
+  on(menuSave, (state, { list }) => ({ ...state, list }))
 )
 
-export const count: string = 'sd'
-export const newsReducer = createReducer(
-  count,
-  on(addc, (state, actions) => {
-    console.log(state, '@@@@')
-    console.log(actions, '####')
-    state = 'fk'
-    return state
-  })
-)
+// export const count: string = 'sd'
+// export const newsReducer = createReducer(
+//   count,
+//   on(addc, (state, actions) => {
+//     console.log(state, '@@@@')
+//     console.log(actions, '####')
+//     state = 'fk'
+//     return state
+//   })
+// )
 
 /*
 Use of this source code is governed by an MIT-style license that

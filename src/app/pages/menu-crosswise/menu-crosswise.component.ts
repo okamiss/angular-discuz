@@ -3,7 +3,10 @@ import { routes } from '../../app.routes'
 import { Router } from '@angular/router'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
-import { NgFor, NgIf } from '@angular/common'
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common'
+import { Store } from '@ngrx/store'
+import { ItemState } from '../../store/menu.reducer'
+import { Observable } from 'rxjs'
 
 interface FoodNode {
   name: string
@@ -15,41 +18,30 @@ interface FoodNode {
 @Component({
   selector: 'app-menu-crosswise',
   standalone: true,
-  imports: [MatButtonModule, MatMenuModule, NgIf, NgFor],
+  imports: [MatButtonModule, MatMenuModule, NgIf, NgFor, AsyncPipe, JsonPipe],
   templateUrl: './menu-crosswise.component.html',
   styleUrl: './menu-crosswise.component.scss'
 })
-export class MenuCrosswiseComponent implements OnInit,AfterViewInit {
-  menuItems: FoodNode[] = []
+export class MenuCrosswiseComponent implements OnInit, AfterViewInit {
+  menuItems$: MenuNode[] | undefined
 
-  constructor(private router: Router) {}
-  filterRouter(routes: any, parentPath: string) {
-    return routes
-      .filter((item: any) => item.path && item.path !== '**')
-      .map((item: any) => {
-        let transformedRoute: FoodNode = {
-          name: item.title,
-          path: parentPath + '/' + item.path,
-          oldPath: item.path
-        }
+  // menuItems$: Observable<ItemState>
 
-        if (item.children) {
-          const filteredChildren = this.filterRouter(item.children, item.path)
-          if (filteredChildren.length > 0) {
-            transformedRoute.children = filteredChildren
-          }
-        }
-        return transformedRoute
-      })
+  constructor(private router: Router, private store: Store<{ menu: ItemState }>) {
+    // this.menuItems$ = store.select('menu')
+    // console.log(this.menuItems$)
+
+    store.select('menu').subscribe((val) => {
+      this.menuItems$ = val.list
+      console.log(this.menuItems$, 'sx')
+    })
   }
 
   ngOnInit(): void {
-    console.log(routes, '@@@@@@@@')
-    this.menuItems = this.filterRouter(routes, '')
-    console.log(this.menuItems)
+    // console.log(routes, '@@@@@@@@')
+    // this.menuItems = this.filterRouter(routes, '')
+    // console.log(this.menuItems)
   }
 
-  ngAfterViewInit(): void {
-   
-  }
+  ngAfterViewInit(): void {}
 }
