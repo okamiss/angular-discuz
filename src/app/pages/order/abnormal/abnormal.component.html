@@ -1,1 +1,24 @@
-<p>abnormal works!</p>
+<form class="example-form" [formGroup]="profileForm" (submit)="onSubmit()">
+  <mat-form-field class="example-form-field">
+    <mat-label>客户ID</mat-label>
+    <input matInput type="text" formControlName="id" />
+  </mat-form-field>
+
+  <mat-form-field class="example-form-field">
+    <mat-label>客户姓名</mat-label>
+    <input matInput type="text" formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field class="example-form-field">
+    <mat-label>First campaign</mat-label>
+    <mat-date-range-input [rangePicker]="campaignOnePicker">
+      <input matStartDate placeholder="Start date" formControlName="start" />
+      <input matEndDate placeholder="End date" formControlName="end" />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+  </mat-form-field>
+
+  <button mat-flat-button>提交</button>
+</form>

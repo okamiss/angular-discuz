@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
     theme: ''
   }
 
-  setOpen = true
+  setOpen = false
   themeList: string[] = [
     'theme-light-azure',
     'theme-light-rose',
