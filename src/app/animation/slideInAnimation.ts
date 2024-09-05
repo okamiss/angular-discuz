@@ -3,6 +3,7 @@ import {
   animateChild,
   group,
   query,
+  state,
   style,
   transition,
   trigger
@@ -49,5 +50,22 @@ export const slideInAnimation = trigger('routeAnimations', [
       query(':enter', [animate('300ms ease-out', style({ left: '0%' }))], { optional: true }),
       query('@*', animateChild(), { optional: true })
     ])
+  ])
+])
+
+export const sideSetting =  trigger('slideInOut', [
+  state('void', style({
+    transform: 'translateX(100%)' // 初始状态：在视图右侧外部
+  })),
+  state('*', style({
+    transform: 'translateX(0)' // 完全进入视图时的位置
+  })),
+  transition(':enter', [
+    animate('300ms ease-in') // 元素进入的动画
+  ]),
+  transition(':leave', [
+    animate('300ms ease-out', style({
+      transform: 'translateX(100%)' // 元素离开时返回到右侧
+    }))
   ])
 ])

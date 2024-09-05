@@ -9,6 +9,7 @@ import { Router } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { ItemState } from '../../store/menu.reducer'
+import { MenuService } from '../../services/menu.service'
 
 /**
  * Food data with nested structure.
@@ -57,8 +58,14 @@ export class MenuComponent implements OnInit, AfterViewInit {
   )
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener)
+  
 
-  constructor(private router: Router, private store: Store<{ menu: ItemState }>) {
+
+  constructor(
+    private router: Router,
+    private store: Store<{ menu: ItemState }>,
+    private menuService: MenuService
+  ) {
     store.select('menu').subscribe((val) => {
       this.dataSource.data = val.list
     })
@@ -69,6 +76,11 @@ export class MenuComponent implements OnInit, AfterViewInit {
   menuClick(e: MenuNode) {
     console.log(e)
     this.router.navigate([e.path])
+  }
+
+  setting(){
+
+    this.menuService.openSet('open')
   }
 
   ngAfterViewInit(): void {

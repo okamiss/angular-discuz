@@ -40,7 +40,7 @@
   num : {{num | async}}
 </div> -->
 
-@if (diretion ==='crosswise') {
+@if (setting.diretion ==='crosswise') {
 <div class="box2">
   <div class="box2-top border">
     <div class="box2-top-logo">
@@ -71,4 +71,28 @@
     </div>
   </div>
 </div>
+} @if (setOpen) {
+<div class="draw" @slideInOut>
+  <h1>设置</h1>
+  <hr />
+  <label id="m">菜单排版</label>
+  <br />
+  <mat-radio-group aria-labelledby="m" [(ngModel)]="setting.diretion" (change)="setMenuChange($event)">
+    <mat-radio-button value="crosswise">横向菜单</mat-radio-button>
+    <mat-radio-button value="vertical">竖向菜单</mat-radio-button>
+  </mat-radio-group>
+  <hr />
+  <label id="t">切换主题</label>
+  <br />
+
+  <mat-radio-group aria-labelledby="t" class="example-radio-group" [(ngModel)]="setting.theme" (change)="setThem($event)">
+    @for (t of themeList; track t) {
+    <mat-radio-button class="example-radio-button" [value]="t">{{ t }}</mat-radio-button>
+    }
+  </mat-radio-group>
+  <hr />
+  <button mat-flat-button (click)="closeDraw()">关闭</button>
+</div>
 }
+
+<!-- <input type="text" [(ngModel)]="st1"> -->

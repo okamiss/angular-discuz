@@ -90,9 +90,22 @@
         max-width: 90%;
       }
     }
+    &-nav {
+      flex: 1;
+      height: 100%;
+    }
   }
   &-down {
     width: 100%;
     flex: 1;
   }
+}
+
+.draw {
+  position: fixed;
+  width: 400px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  background: #ccc;
 }

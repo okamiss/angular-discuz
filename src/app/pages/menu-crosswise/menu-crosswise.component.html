@@ -1,18 +1,27 @@
-
-
-@for (item of menuItems$; track $index) {
-  <p>{{item | json}}</p>
-}
-
+<div class="nav">
+  <div class="menu">
+    @for (item of menuItems$; track $index; let i = $index) {
+    <button mat-button [matMenuTriggerFor]="menu" (click)="menuClick(item)">{{ item.name }}</button>
+    <mat-menu #menu="matMenu">
+      @for (subitem of item.children; track $index) {
+      <button mat-menu-item (click)="menuClick(item)">{{ subitem.name }}</button>
+      }
+    </mat-menu>
+    }
+  </div>
+  <div class="set">
+    <mat-icon fontIcon="settings" (click)="setting()"></mat-icon>
+  </div>
+</div>
 
 <!-- 顶层菜单 -->
-
-<!-- @for (item of menuItems; track $index) {
-<button mat-button [matMenuTriggerFor]="item.oldPath">{{ item.name }}</button>
-<mat-menu #{{item.oldPath}}="matMenu">
+<!-- 
+@for (item of menuItems$; track $index) {
+<button mat-button [matMenuTriggerFor]="item.enname">{{ item.name }}</button>
+<mat-menu #{{item.enname}}="matMenu">
   @if (item.children) { @for (citem of item.children; track $index) {
-  <button mat-menu-item [matMenuTriggerFor]="citem.oldPath">{{ citem.name }}</button>
-  <mat-menu #{{citem.oldPath}}="matMenu"></mat-menu>
+  <button mat-menu-item [matMenuTriggerFor]="citem.enname">{{ citem.name }}</button>
+  <mat-menu #{{citem.enname}}="matMenu"></mat-menu>
   } } @else {
   <button mat-menu-item>{{ item.name }}</button>
   }

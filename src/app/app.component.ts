@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ChildrenOutletContexts, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
 // import { menusList } from './common/menu-data'
-import { slideInAnimation } from './animation/slideInAnimation'
+import { sideSetting, slideInAnimation } from './animation/slideInAnimation'
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
@@ -13,8 +13,17 @@ import { MenuComponent } from './pages/menu/menu.component'
 import { MenuCrosswiseComponent } from './pages/menu-crosswise/menu-crosswise.component'
 import { routes } from './app.routes'
 import { menuSave } from './store/menu.actions'
+import { MenuService } from './services/menu.service'
+import { MatRadioModule } from '@angular/material/radio'
+import { FormsModule } from '@angular/forms'
 
 type diretionType = 'crosswise' | 'vertical'
+
+interface SetInterface {
+  diretion: diretionType
+  theme: string
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,44 +37,73 @@ type diretionType = 'crosswise' | 'vertical'
     AsyncPipe,
     JsonPipe,
     MenuComponent,
-    MenuCrosswiseComponent
+    MenuCrosswiseComponent,
+    MatRadioModule,
+    FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  animations: [slideInAnimation]
+  animations: [slideInAnimation, sideSetting]
 })
 export class AppComponent implements OnInit {
-  diretion: diretionType = 'crosswise'
   logoUrl = 'assets/images/logo.png'
 
-  count$: Observable<string>
+  // count$: Observable<string>
 
   // menusList = menusList
 
-  num: Observable<number>
+  // num: Observable<number>
 
-  constructor(private contexts: ChildrenOutletContexts, private store: Store<any>) {
-    this.count$ = store.select('BBB')
-    this.num = store.select('AAA')
+  setting: SetInterface = {
+    diretion: 'vertical',
+    theme: ''
+  }
+
+  setOpen = true
+  themeList: string[] = [
+    'theme-light-azure',
+    'theme-light-rose',
+    'theme-dark-magenta',
+    'theme-dark-cayn'
+  ]
+
+  constructor(
+    private contexts: ChildrenOutletContexts,
+    private store: Store<any>,
+    private menuService: MenuService
+  ) {
+    // this.count$ = store.select('BBB')
+    // this.num = store.select('AAA')
   }
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation']
   }
 
-  swChange(e: MatSlideToggleChange) {
-    console.log(e)
-  }
-
-  setThem(e: string) {
+  setThem(e: any) {
     const htmlElement = document.documentElement // 或者 document.querySelector('html');
 
-    if (e !== 'theme-light-azure') {
-      htmlElement.className = e
-      localStorage.setItem('theme', e)
+    const val = e.value
+
+    if (val !== 'theme-light-azure') {
+      htmlElement.className = val
+      this.setting.theme = val
+      localStorage.setItem('setting', JSON.stringify(this.setting))
     } else {
       htmlElement.className = ''
-      localStorage.removeItem('theme')
+      this.setting.theme = ''
+      localStorage.setItem('setting', JSON.stringify(this.setting))
     }
+  }
+
+  setMenuChange(e: any) {
+    console.log(e.value)
+    this.setting.diretion = e.value
+
+    localStorage.setItem('setting', JSON.stringify(this.setting))
+  }
+
+  closeDraw() {
+    this.setOpen = false
   }
 
   // inc() {
@@ -91,7 +129,8 @@ export class AppComponent implements OnInit {
       .map((item: any) => {
         let transformedRoute: MenuNode = {
           name: item.title,
-          path: parentPath + '/' + item.path
+          path: parentPath + '/' + item.path,
+          enname: item.path
         }
 
         if (item.children) {
@@ -105,10 +144,17 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const htmlElement = document.documentElement
-    const getTheme = localStorage.getItem('theme')
-    if (getTheme) {
-      htmlElement.className = getTheme
+    const settingData = localStorage.getItem('setting')
+    const getSet: SetInterface | null = settingData ? JSON.parse(settingData) : null
+
+    // const getSet:SetInterface = JSON.parse(localStorage.getItem('setting'))
+
+    // console.log(getSet);
+
+    if (getSet) {
+      this.setting = getSet
+      const htmlElement = document.documentElement
+      htmlElement.className = this.setting.theme
     }
 
     const menuArr: MenuNode[] = this.filterRouter(routes, '')
@@ -118,5 +164,9 @@ export class AppComponent implements OnInit {
         list: menuArr
       })
     )
+
+    this.menuService.data$.subscribe((data) => {
+      this.setOpen = true
+    })
   }
 }
