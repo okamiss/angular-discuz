@@ -33,15 +33,10 @@ export class MenuCrosswiseComponent implements OnInit, AfterViewInit {
 
     store.select('menu').subscribe((val) => {
       this.menuItems$ = val.list
-      console.log(this.menuItems$, 'sx')
     })
   }
 
-  ngOnInit(): void {
-    // console.log(routes, '@@@@@@@@')
-    // this.menuItems = this.filterRouter(routes, '')
-    // console.log(this.menuItems)
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {}
 }
