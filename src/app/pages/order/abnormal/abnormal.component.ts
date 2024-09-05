@@ -7,10 +7,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatIcon } from '@angular/material/icon'
 import { provideNativeDateAdapter } from '@angular/material/core'
 
-const today = new Date()
-const month = today.getMonth()
-const year = today.getFullYear()
-
 @Component({
   selector: 'app-abnormal',
   standalone: true,
