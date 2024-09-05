@@ -1,9 +1,11 @@
 import { FlatTreeControl } from '@angular/cdk/tree'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from '@angular/material/tree'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { Router } from '@angular/router'
+
+import { routes } from '../../app.routes'
 
 /**
  * Food data with nested structure.
@@ -56,7 +58,7 @@ const TREE_DATA: FoodNode[] = [
 interface ExampleFlatNode {
   expandable: boolean
   name: string
-  path:string
+  path: string
   level: number
 }
 
@@ -71,15 +73,12 @@ interface ExampleFlatNode {
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
-export class MenuComponent {
-
-
-
+export class MenuComponent implements OnInit {
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
-      path:node.path,
+      path: node.path,
       level: level
     }
   }
@@ -98,16 +97,40 @@ export class MenuComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener)
 
-  constructor(private router:Router) {
-    this.dataSource.data = TREE_DATA
+  constructor(private router: Router) {
+    // this.dataSource.data = TREE_DATA
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable
 
+  menuClick(e: FoodNode) {
+    console.log(e)
+    this.router.navigate([e.path])
+  }
 
-  menuClick(e:FoodNode){
-    console.log(e);
-    this.router.navigate([e.path]);
+  filterRouter(routes: any, parentPath: string) {
+    return routes
+      .filter((item: any) => item.path && item.path !=='**')
+      .map((item: any) => {
+        let transformedRoute: FoodNode = {
+          name: item.title,
+          path: parentPath + '/' + item.path
+        }
 
+        if (item.children) {
+          const filteredChildren = this.filterRouter(item.children, item.path)
+          if (filteredChildren.length > 0) {
+            transformedRoute.children = filteredChildren
+          }
+        }
+        return transformedRoute
+      })
+  }
+
+  ngOnInit(): void {
+    console.log(routes, '@@@@@@@@')
+    this.dataSource.data = this.filterRouter(routes, '')
+    const arr = this.filterRouter(routes, '')
+    console.log(arr)
   }
 }

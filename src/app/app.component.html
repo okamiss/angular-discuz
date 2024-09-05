@@ -40,9 +40,26 @@
   num : {{num | async}}
 </div> -->
 
+@if (diretion ==='crosswise') {
+<div class="box2">
+  <div class="box2-top border">
+    <div class="box2-top-logo">
+      <img [src]="logoUrl" alt="Logo" />
+    </div>
+    <div class="box2-top-nav">
+      <app-menu-crosswise></app-menu-crosswise>
+    </div>
+  </div>
+  <div class="box2-down" [@routeAnimations]="getRouteAnimationData()">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+} @else {
 <div class="box">
   <div class="box-left border">
-    <div class="box-left-logo border">CRM系统</div>
+    <div class="box-left-logo border">
+      <img [src]="logoUrl" alt="Logo" />
+    </div>
     <div class="box-left-menu">
       <app-menu></app-menu>
     </div>
@@ -54,3 +71,4 @@
     </div>
   </div>
 </div>
+}

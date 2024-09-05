@@ -10,7 +10,8 @@ import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { AsyncPipe, JsonPipe } from '@angular/common'
 import { MenuComponent } from './pages/menu/menu.component'
-
+import { MenuCrosswiseComponent } from './pages/menu-crosswise/menu-crosswise.component'
+type diretionType = 'crosswise' | 'vertical'
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -23,13 +24,17 @@ import { MenuComponent } from './pages/menu/menu.component'
     MatMenuModule,
     AsyncPipe,
     JsonPipe,
-    MenuComponent
+    MenuComponent,
+    MenuCrosswiseComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [slideInAnimation]
 })
 export class AppComponent implements OnInit {
+  diretion: diretionType = 'crosswise'
+  logoUrl = 'assets/images/logo.png'
+
   count$: Observable<string>
 
   menusList = menusList

@@ -1,0 +1,44 @@
+<!-- 顶层菜单 -->
+
+@for (item of menuItems; track $index) {
+<button mat-button [matMenuTriggerFor]="item.oldPath">{{ item.name }}</button>
+<mat-menu #{{item.oldPath}}="matMenu">
+  @if (item.children) { @for (citem of item.children; track $index) {
+  <button mat-menu-item [matMenuTriggerFor]="citem.oldPath">{{ citem.name }}</button>
+  <mat-menu #{{citem.oldPath}}="matMenu"></mat-menu>
+  } } @else {
+  <button mat-menu-item>{{ item.name }}</button>
+  }
+</mat-menu>
+}
+
+<!-- <ng-container *ngFor="let menu of menuItems">
+  <button mat-button [matMenuTriggerFor]="menu.oldPath">{{ menu.name }}</button>
+  <mat-menu #{{menu.oldPath}}="matMenu">
+    <ng-container *ngIf="menu.children">
+      <ng-container *ngFor="let child of menu.children">
+        <button mat-menu-item [matMenuTriggerFor]="child.oldPath">{{ child.name }}</button>
+        <mat-menu #{{child.oldPath}}="matMenu">
+      递归调用，继续处理子菜单 
+          <ng-container *ngIf="child.children">
+            <ng-container *ngFor="let subChild of child.children">
+              <button mat-menu-item>{{ subChild.name }}</button>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!child.children">
+            <button mat-menu-item>{{ child.name }}</button>
+          </ng-container>
+        </mat-menu>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!menu.children">
+      <button mat-menu-item>{{ menu.name }}</button>
+    </ng-container>
+  </mat-menu>
+</ng-container> -->
+
+<!-- <button mat-button [matMenuTriggerFor]="animals">Animal index</button>
+<mat-menu #animals="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
+  <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+</mat-menu> -->

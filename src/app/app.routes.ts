@@ -7,6 +7,8 @@ import { LiveComponent } from './pages/live/live.component'
 import { SignComponent } from './pages/live/sign/sign.component'
 import { PkComponent } from './pages/live/pk/pk.component'
 import { PerformanceComponent } from './pages/performance/performance.component'
+import { OrderComponent } from './pages/order/order.component'
+import { AbnormalComponent } from './pages/order/abnormal/abnormal.component'
 export const routes: Routes = [
   {
     path: 'home',
@@ -18,7 +20,6 @@ export const routes: Routes = [
     path: 'live',
     component: LiveComponent,
     title: '直播管理',
-    data: { animation: 'LivePage' },
     children: [
       { path: '', redirectTo: 'sign', pathMatch: 'full' },
       {
@@ -40,6 +41,20 @@ export const routes: Routes = [
     component: PerformanceComponent,
     title: '业绩统计',
     data: { animation: 'PerformancePage' }
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
+    title: '订单管理',
+    children: [
+      { path: '', redirectTo: 'abnormal', pathMatch: 'full' },
+      {
+        path: 'abnormal',
+        component: AbnormalComponent,
+        title: '异常开单',
+        data: { animation: 'AbnormalPage' }
+      }
+    ]
   },
   {
     path: 'social',
