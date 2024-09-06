@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://test.zgai.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

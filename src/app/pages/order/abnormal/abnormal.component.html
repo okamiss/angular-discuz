@@ -1,24 +1,78 @@
 <form class="example-form" [formGroup]="profileForm" (submit)="onSubmit()">
   <mat-form-field class="example-form-field">
     <mat-label>客户ID</mat-label>
-    <input matInput type="text" formControlName="id" />
+    <input matInput type="text" formControlName="vccustomerid" />
   </mat-form-field>
 
   <mat-form-field class="example-form-field">
     <mat-label>客户姓名</mat-label>
-    <input matInput type="text" formControlName="name" />
+    <input matInput type="text" formControlName="vcname" />
+    <mat-hint>客户姓名最少为两位</mat-hint>
   </mat-form-field>
 
   <mat-form-field class="example-form-field">
     <mat-label>申请时间</mat-label>
-    <mat-date-range-input [rangePicker]="campaignOnePicker">
-      <input matStartDate placeholder="Start date" formControlName="start" />
-      <input matEndDate placeholder="End date" formControlName="end" />
+    <mat-date-range-input [rangePicker]="applyTime">
+      <input matStartDate placeholder="Start date" formControlName="start_apply_time" />
+      <input matEndDate placeholder="End date" formControlName="end_apply_time" />
     </mat-date-range-input>
     <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+    <mat-datepicker-toggle matIconSuffix [for]="applyTime"></mat-datepicker-toggle>
+    <mat-date-range-picker #applyTime></mat-date-range-picker>
   </mat-form-field>
 
+  <mat-form-field class="example-form-field">
+    <mat-label>审核时间</mat-label>
+    <mat-date-range-input [rangePicker]="auditTime">
+      <input matStartDate placeholder="Start date" formControlName="start_audit_time" />
+      <input matEndDate placeholder="End date" formControlName="end_audit_time" />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="auditTime"></mat-datepicker-toggle>
+    <mat-date-range-picker #auditTime></mat-date-range-picker>
+  </mat-form-field>
+
+  <!-- [disabled]="profileForm.invalid" -->
   <button mat-flat-button>提交</button>
 </form>
+
+<div>
+  {{ dataSource.length }}
+  {{ total }}
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="vcname">
+    <th mat-header-cell *matHeaderCellDef>客户姓名</th>
+    <td mat-cell *matCellDef="let element">{{ element.vcname }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>产品价格（元）</th>
+    <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+     132
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:5000' // 替换为你的接口基础URL
+  private baseUrl = 'http://localhost:4200' // 替换为你的接口基础URL
 
   constructor(private http: HttpClient) {}
 
