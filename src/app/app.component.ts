@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
       localStorage.setItem('setting', JSON.stringify(this.setting))
     } else {
       htmlElement.className = ''
-      this.setting.theme = ''
+      this.setting.theme = 'theme-light-azure'
       localStorage.setItem('setting', JSON.stringify(this.setting))
     }
   }

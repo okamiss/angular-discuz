@@ -18,5 +18,9 @@ $theme-dark-magenta: mat.define-theme(
   )
 );
 .theme-dark-magenta {
+  background: #000;
   @include mat.all-component-themes($theme-dark-magenta);
+  .draw{
+    background: #000;
+  }
 }

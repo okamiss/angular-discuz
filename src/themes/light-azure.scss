@@ -20,4 +20,7 @@ $theme-light-azure: mat.define-theme(
 
 html {
   @include mat.all-component-themes($theme-light-azure);
+  .draw{
+    background: #fff;
+  }
 }

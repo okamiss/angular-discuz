@@ -20,4 +20,7 @@ $theme-light-rose: mat.define-theme(
 
 .theme-light-rose {
   @include mat.all-component-themes($theme-light-rose);
+  .draw{
+    background: #fff;
+  }
 }

@@ -18,5 +18,9 @@ $theme-dark-cayn: mat.define-theme(
   )
 );
 .theme-dark-cayn {
+  background: #000;
   @include mat.all-component-themes($theme-dark-cayn);
+  .draw{
+    background: #000;
+  }
 }
