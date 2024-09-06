@@ -1,6 +1,6 @@
 import { CanActivateFn } from '@angular/router'
 
-import { LoadingService } from '../../services/loading.service'
+import { LoadingService } from '../services/loading.service'
 import { inject } from '@angular/core'
 
 export const loadingGuard: CanActivateFn = (route, state) => {

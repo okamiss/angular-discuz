@@ -9,7 +9,7 @@ import { PkComponent } from './pages/live/pk/pk.component'
 import { PerformanceComponent } from './pages/performance/performance.component'
 import { OrderComponent } from './pages/order/order.component'
 import { AbnormalComponent } from './pages/order/abnormal/abnormal.component'
-import { loadingGuard } from './pages/guards/loading.guard'
+import { loadingGuard } from './guards/loading.guard'
 export const routes: Routes = [
   {
     path: 'home',
