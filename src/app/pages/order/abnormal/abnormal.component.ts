@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit
+  OnInit,
+  inject
 } from '@angular/core'
 import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -18,12 +19,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 
 import { MatIcon } from '@angular/material/icon'
 import { provideNativeDateAdapter } from '@angular/material/core'
-import { MatButton } from '@angular/material/button'
+import { MatButton, MatButtonModule } from '@angular/material/button'
 import { ApiService } from '../../../services/api.service'
 import { map } from 'rxjs/operators'
 import { MatTableModule } from '@angular/material/table'
 import { CurrencyPipe } from '@angular/common'
-import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator'
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog'
 
 @Component({
   selector: 'app-abnormal',
@@ -39,16 +41,21 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     MatButton,
     MatTableModule,
     MatPaginatorModule,
-    CurrencyPipe
+    CurrencyPipe,
+    MatDialogModule
   ],
   templateUrl: './abnormal.component.html',
   styleUrl: './abnormal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AbnormalComponent implements OnInit, AfterViewInit {
-  dataSource = []
-  displayedColumns: string[] = ['id', 'vcname','price','actions']
+  dataSource: AbnormalInterface[] = []
+  displayedColumns: string[] = ['id', 'vcname', 'price', 'actions']
   total: number = 0
+  pagesParams = {
+    page: 1,
+    limit: 10
+  }
   // ChangeDetectorRef
   constructor(private http: ApiService, private cd: ChangeDetectorRef) {}
 
@@ -62,10 +69,14 @@ export class AbnormalComponent implements OnInit, AfterViewInit {
   })
 
   onSubmit() {
-    // console.log(this.profileForm.value)
+    console.log(this.profileForm.value)
     // console.log(this.profileForm.valid)
 
     const newForm = new FormData()
+    const data: any = { ...this.profileForm.value, ...this.pagesParams }
+    for (const key in data) {
+      newForm.append(key, data[key])
+    }
 
     this.http
       .post('api/compliance/abNormalApplyList', newForm)
@@ -77,10 +88,39 @@ export class AbnormalComponent implements OnInit, AfterViewInit {
         this.cd.detectChanges()
       })
   }
+  readonly dialog = inject(MatDialog)
+
+  lookDetail(e: AbnormalInterface) {
+    const dialogRef = this.dialog.open(DialogContentExampleDialog, {
+      data: e
+    })
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`)
+    })
+  }
+
+  onChange(e: PageEvent) {
+    const { pageIndex, pageSize } = e
+    this.pagesParams.page = pageIndex + 1
+    this.pagesParams.limit = pageSize
+    this.onSubmit()
+  }
 
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {
     this.onSubmit()
   }
+}
+
+@Component({
+  selector: 'dialog-content-example-dialog',
+  templateUrl: 'dialog-content-example-dialog.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class DialogContentExampleDialog {
+  data = inject(MAT_DIALOG_DATA)
 }
