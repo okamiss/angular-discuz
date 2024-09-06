@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ChildrenOutletContexts, RouterOutlet } from '@angular/router';
-import { slideInAnimation } from '../../animation/slideInAnimation';
+import { slideInAnimation } from '../../animations/slideInAnimation';
 
 @Component({
   selector: 'app-live',

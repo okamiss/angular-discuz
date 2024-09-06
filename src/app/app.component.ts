@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ChildrenOutletContexts, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
 // import { menusList } from './common/menu-data'
-import { sideSetting, slideInAnimation } from './animation/slideInAnimation'
+import { sideSetting, slideInAnimation } from './animations/slideInAnimation'
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatButtonModule } from '@angular/material/button'
