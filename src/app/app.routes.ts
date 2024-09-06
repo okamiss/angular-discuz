@@ -9,12 +9,14 @@ import { PkComponent } from './pages/live/pk/pk.component'
 import { PerformanceComponent } from './pages/performance/performance.component'
 import { OrderComponent } from './pages/order/order.component'
 import { AbnormalComponent } from './pages/order/abnormal/abnormal.component'
+import { loadingGuard } from './pages/guards/loading.guard'
 export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
     title: '首页',
-    data: { animation: 'HomePage' }
+    data: { animation: 'HomePage' },
+    canActivate:[loadingGuard]
   },
   {
     path: 'live',
@@ -40,7 +42,8 @@ export const routes: Routes = [
     path: 'performance',
     component: PerformanceComponent,
     title: '业绩统计',
-    data: { animation: 'PerformancePage' }
+    data: { animation: 'PerformancePage' },
+    canActivate:[loadingGuard]
   },
   {
     path: 'order',

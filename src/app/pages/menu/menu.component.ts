@@ -74,7 +74,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable
 
   menuClick(e: MenuNode) {
-    console.log(e)
+    // console.log(e)
     this.router.navigate([e.path])
   }
 

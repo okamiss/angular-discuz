@@ -69,7 +69,7 @@ export class AbnormalComponent implements OnInit, AfterViewInit {
   })
 
   onSubmit() {
-    console.log(this.profileForm.value)
+    // console.log(this.profileForm.value)
     // console.log(this.profileForm.valid)
 
     const newForm = new FormData()

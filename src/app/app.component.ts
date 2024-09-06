@@ -16,6 +16,8 @@ import { menuSave } from './store/menu.actions'
 import { MenuService } from './services/menu.service'
 import { MatRadioModule } from '@angular/material/radio'
 import { FormsModule } from '@angular/forms'
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { LoadingService } from './services/loading.service'
 
 type diretionType = 'crosswise' | 'vertical'
 
@@ -39,7 +41,9 @@ interface SetInterface {
     MenuComponent,
     MenuCrosswiseComponent,
     MatRadioModule,
-    FormsModule
+    FormsModule,
+    MatProgressBarModule,
+    
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -70,7 +74,8 @@ export class AppComponent implements OnInit {
   constructor(
     private contexts: ChildrenOutletContexts,
     private store: Store<any>,
-    private menuService: MenuService
+    private menuService: MenuService,
+    public loadingService: LoadingService
   ) {
     // this.count$ = store.select('BBB')
     // this.num = store.select('AAA')
@@ -96,7 +101,7 @@ export class AppComponent implements OnInit {
   }
 
   setMenuChange(e: any) {
-    console.log(e.value)
+    // console.log(e.value)
     this.setting.diretion = e.value
 
     localStorage.setItem('setting', JSON.stringify(this.setting))

@@ -40,6 +40,15 @@
   num : {{num | async}}
 </div> -->
 
+@if (loadingService.loading$ | async) {
+<mat-progress-bar
+  mode="indeterminate"
+  color="primary"
+  style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000"
+>
+</mat-progress-bar>
+} 
+
 @if (setting.diretion ==='crosswise') {
 <div class="box2">
   <div class="box2-top border">
@@ -71,13 +80,19 @@
     </div>
   </div>
 </div>
-} @if (setOpen) {
+}
+
+@if (setOpen) {
 <div class="draw" @slideInOut>
   <h1>设置</h1>
   <hr />
   <label id="m">菜单排版</label>
   <br />
-  <mat-radio-group aria-labelledby="m" [(ngModel)]="setting.diretion" (change)="setMenuChange($event)">
+  <mat-radio-group
+    aria-labelledby="m"
+    [(ngModel)]="setting.diretion"
+    (change)="setMenuChange($event)"
+  >
     <mat-radio-button value="crosswise">横向菜单</mat-radio-button>
     <mat-radio-button value="vertical">竖向菜单</mat-radio-button>
   </mat-radio-group>
@@ -85,7 +100,12 @@
   <label id="t">切换主题</label>
   <br />
 
-  <mat-radio-group aria-labelledby="t" class="example-radio-group" [(ngModel)]="setting.theme" (change)="setThem($event)">
+  <mat-radio-group
+    aria-labelledby="t"
+    class="example-radio-group"
+    [(ngModel)]="setting.theme"
+    (change)="setThem($event)"
+  >
     @for (t of themeList; track t) {
     <mat-radio-button class="example-radio-button" [value]="t">{{ t }}</mat-radio-button>
     }
