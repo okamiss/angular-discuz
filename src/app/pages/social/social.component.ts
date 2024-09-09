@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { ApiService } from '../../services/api.service'
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatSelectModule } from '@angular/material/select'
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator'
-
+import { HighlightDirective } from '../../directives/highlight.directive'
 export interface PeriodicElement {
   name: string
   position: number
@@ -39,12 +39,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatButtonModule,
     MatSelectModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    HighlightDirective
   ],
   templateUrl: './social.component.html',
   styleUrl: './social.component.scss'
 })
 export class SocialComponent implements OnInit {
+  color = 'yellow'
+
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol']
   dataSource = ELEMENT_DATA
   clickedRows = new Set<PeriodicElement>()
@@ -81,7 +84,7 @@ export class SocialComponent implements OnInit {
     console.log(this.form.value)
   }
 
-  onChange(e:PageEvent) {
+  onChange(e: PageEvent) {
     console.log(e)
   }
 }
