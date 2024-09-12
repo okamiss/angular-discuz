@@ -11,8 +11,10 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   // GET 请求
-  get(endpoint: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${endpoint}`)
+  get(endpoint: string, params?: any): Observable<any> {
+    const urlParams = new URLSearchParams(params)
+
+    return this.http.get(`${this.baseUrl}/${endpoint}?${urlParams.toString()}`)
   }
 
   // POST 请求

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { ApiService } from '../../../services/api.service'
 
 @Component({
   selector: 'app-asset',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './asset.component.html',
   styleUrl: './asset.component.scss'
 })
-export class AssetComponent {
+export class AssetComponent implements OnInit {
+  constructor(private http: ApiService) {}
 
+  ngOnInit(): void {
+    const params = {
+      name: 'aa',
+      age: 18
+    }
+    this.http.get('api/user/getMyUserInfo', params).subscribe((res) => {})
+  }
 }
