@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([httpInterceptor])),
     provideAnimationsAsync(),
     provideStore(),
-    provideState("menu",menuReducer),
+    provideState('menu', menuReducer),
     // provideState('AAA',counterReducer),
     // provideState('BBB',newsReducer),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })

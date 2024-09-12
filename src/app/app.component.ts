@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { ChildrenOutletContexts, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
+import {
+  ChildrenOutletContexts,
+  Route,
+  Router,
+  RouterLink,
+  RouterModule,
+  RouterOutlet
+} from '@angular/router'
 // import { menusList } from './common/menu-data'
 import { sideSetting, slideInAnimation } from './animations/slideInAnimation'
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle'
@@ -16,7 +23,7 @@ import { menuSave } from './store/menu.actions'
 import { MenuService } from './services/menu.service'
 import { MatRadioModule } from '@angular/material/radio'
 import { FormsModule } from '@angular/forms'
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { LoadingService } from './services/loading.service'
 
 type diretionType = 'crosswise' | 'vertical'
@@ -42,14 +49,14 @@ interface SetInterface {
     MenuCrosswiseComponent,
     MatRadioModule,
     FormsModule,
-    MatProgressBarModule,
-    
+    MatProgressBarModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [slideInAnimation, sideSetting]
 })
 export class AppComponent implements OnInit {
+  flatRoutes: any = []
   logoUrl = 'assets/images/logo.png'
 
   // count$: Observable<string>
@@ -75,7 +82,8 @@ export class AppComponent implements OnInit {
     private contexts: ChildrenOutletContexts,
     private store: Store<any>,
     private menuService: MenuService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private router: Router
   ) {
     // this.count$ = store.select('BBB')
     // this.num = store.select('AAA')
@@ -162,10 +170,27 @@ export class AppComponent implements OnInit {
       htmlElement.className = this.setting.theme
     }
 
+    // const comlist = [
+    //   {
+    //     name: '公司管理',
+    //     path: '/company',
+    //     enname: 'company',
+    //     children: [
+    //       {
+    //         name: '资产管理',
+    //         path: 'company/asset',
+    //         enname: 'asset'
+    //       }
+    //     ]
+    //   }
+    // ]
+
     const menuArr: MenuNode[] = this.filterRouter(routes, '')
+    console.log(menuArr, 'menuArr')
 
     this.store.dispatch(
       menuSave({
+        // list: [...menuArr,...comlist]
         list: menuArr
       })
     )

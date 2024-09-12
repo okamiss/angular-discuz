@@ -31,14 +31,15 @@ export const routes: Routes = [
       {
         path: 'sign',
         // component: SignComponent,
-        loadComponent:()=>import('./pages/live/sign/sign.component').then(m=>m.SignComponent),
+        loadComponent: () =>
+          import('./pages/live/sign/sign.component').then((m) => m.SignComponent),
         title: '直播签到统计',
         data: { animation: 'SignPage' }
       },
       {
         path: 'pk',
         // component: PkComponent,
-        loadComponent:()=>import('./pages/live/pk/pk.component').then(m=>m.PkComponent),
+        loadComponent: () => import('./pages/live/pk/pk.component').then((m) => m.PkComponent),
         title: '直播pk',
         data: { animation: 'PkPage' }
       }
@@ -47,7 +48,8 @@ export const routes: Routes = [
   {
     path: 'performance',
     // component: PerformanceComponent,
-    loadComponent: () => import('./pages/performance/performance.component').then((m) => m.PerformanceComponent),
+    loadComponent: () =>
+      import('./pages/performance/performance.component').then((m) => m.PerformanceComponent),
     title: '业绩统计',
     data: { animation: 'PerformancePage' },
     canActivate: [loadingGuard]
@@ -62,7 +64,8 @@ export const routes: Routes = [
       {
         path: 'abnormal',
         // component: AbnormalComponent,
-        loadComponent:()=>import('./pages/order/abnormal/abnormal.component').then(m=>m.AbnormalComponent),
+        loadComponent: () =>
+          import('./pages/order/abnormal/abnormal.component').then((m) => m.AbnormalComponent),
         title: '异常开单',
         data: { animation: 'AbnormalPage' }
       }
@@ -74,6 +77,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/social/social.component').then((m) => m.SocialComponent),
     title: '社交',
     data: { animation: 'SocialPage' }
+  },
+  {
+    title: '公司管理',
+    path: 'company',
+    loadChildren: () => import('./routes/company/company.routes').then((m) => m.routes)
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
